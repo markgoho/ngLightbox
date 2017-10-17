@@ -17,8 +17,7 @@ import { PICTURES, Picture } from './picture';
     <app-lightbox 
       *ngIf="showLightbox" 
       [picture]="lbPicture"
-      (hide)="onHide($event)">
-      
+      (hide)="showLightbox = false">
     </app-lightbox>
   `,
   styles: []
@@ -33,17 +32,13 @@ export class AppComponent {
     this.lbPicture = picture;
   }
 
-  onHide(hidden: boolean) {
-    this.showLightbox = hidden;
-  }
-
   onSearch(text: string) {
     if (!text) {
       this.filteredPictures = PICTURES;
     } else {
       const formattedText = text.trim().toLowerCase();
       this.filteredPictures = PICTURES.filter(
-        picture => picture.caption.toLowerCase().search(formattedText) > 0
+        picture => picture.caption.toLowerCase().search(formattedText) !== -1
       );
     }
   }
